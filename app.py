@@ -9,7 +9,7 @@ def accueil():
 
 
 def additionner(a, b):
-    return a + b
+    return a - b
 
 
 @app.route("/calcul")

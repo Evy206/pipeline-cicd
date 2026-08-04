@@ -1,4 +1,4 @@
-name: CI - Tests automatiques
+name: CI/CD - Tests et déploiement
 
 on:
   push:
@@ -23,3 +23,13 @@ jobs:
 
       - name: Lancer les tests
         run: pytest
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Déclencher le déploiement sur Render
+        run: curl -X POST "$RENDER_DEPLOY_HOOK"
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
